@@ -38,3 +38,21 @@
   adapter: eno1
   memory:  1024
   vmdk:    osd4.vmdk
+- name:    osd5
+  ipaddr:  192.168.2.115
+  netmask: 255.255.255.0
+  adapter: eno1
+  memory:  1024
+  vmdk:    osd5.vmdk
+- name:    osd6
+  ipaddr:  192.168.2.116
+  netmask: 255.255.255.0
+  adapter: eno1
+  memory:  1024
+  vmdk:    osd6.vmdk
+- name:    osd7
+  ipaddr:  192.168.2.117
+  netmask: 255.255.255.0
+  adapter: eno1
+  memory:  1024
+  vmdk:    osd7.vmdk
