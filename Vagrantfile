@@ -28,7 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.hostmanager.manage_host = true
   config.hostmanager.manage_guest = true
   config.hostmanager.ignore_private_ip = false
-  config.hostmanager.include_offline = false
+  config.hostmanager.include_offline = true
   config.vm.box = "CentOS-7.3-puppet-virtualbox"
   config.vm.box_url = 'http://images.kilduff.de/CentOS-7.3-puppet-virtualbox.box'
   config.ssh.insert_key = false
