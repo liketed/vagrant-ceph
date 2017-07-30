@@ -9,12 +9,20 @@ I am using bridged networking with my home network for a few reasons. A single h
 
 I have 2 HP proliant microservers, 12gb ram, The original crappy cpu G1610T, and 5 hard disks. OS disk is sde, and my ceph data drives are sda to sdd. The data drives range from 1TB - 1.5TB.
 
-# How to attach physical disks to vagrant?
+# Ceph-dash
 
-Be very f*cking careful here.
+Ceph dash is installed on the mons and can be seen on http://mon1:80 or http://192.168.2.102:80, apache needs permission to read the keyring file:
+
+    chmod 0660 /etc/ceph/ceph.client.admin.keyring
+    chown root:apache  /etc/ceph/ceph.client.admin.keyring
+
+
+# How to attach physical disks to vagrant?
+If you've run out space for your tests by using the built in sdb in my CentOS box and you want to play with bigger disks, you can attach physical disks using VboxManage and servers.yaml
+
+Be very forking careful here.
 Use at your own risk.
 You have been warned!!! 
-
 
 Now that you have been warned, we create vmdk files to point to disk devices.
 
@@ -31,3 +39,33 @@ RAW host disk access VMDK file osd4.vmdk created successfully.
 ```
 
 In the Vagrantfile there is an if statement checking if the server entry in servers.yaml contains a vmdk text string, and if it does, it attempts to attach that string filename as a vmdk file to the vm.
+
+
+# Playing
+
+To be formatted, just notes for now
+
+```bash
+[ceph@mon1 ~]$ sudo ceph osd lspools
+0 rbd,
+[ceph@mon1 ~]$ sudo ceph osd pool get rbd size
+size: 3
+[ceph@mon1 ~]$ sudo ceph osd pool get rbd min_size
+min_size: 2
+[ceph@mon1 ~]$ sudo ceph osd pool set rbd size 2
+set pool 0 size to 2
+[ceph@mon1 ~]$ sudo ceph osd pool set rbd min_size 1
+set pool 0 min_size to 1
+[ceph@mon1 ~]$ sudo ceph osd pool get rbd size
+size: 2
+[ceph@mon1 ~]$ sudo ceph osd pool get rbd min_size
+min_size: 1
+```
+
+# Sources
+
+There's 2 websites I've been referencing when playing with ceph:
+https://www.virtualtothecore.com/en/adventures-ceph-storage-part-1-introduction/
+https://www.virtualtothecore.com/en/quickly-build-a-new-ceph-cluster-with-ceph-deploy-on-centos-7/
+https://www.howtoforge.com/tutorial/how-to-build-a-ceph-cluster-on-centos-7/
+https://www.howtoforge.com/tutorial/using-ceph-as-block-device-on-centos-7/
